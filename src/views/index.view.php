@@ -7,7 +7,9 @@
 </head>
 <body>
 
-    <?php require __DIR__ .'/../src/parts/header.view.php'; ?>
+    <h1><?= $titulo ?><h1>
+        
+    <?php require __DIR__ .'/parts/nav.view.php'; ?>
     
     <main>
         <h1><?= $main ?><h1>

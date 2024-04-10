@@ -1,46 +1,32 @@
 <?php 
 
-$menu = [
-    [
-        'href' => '/',
-        'name' => 'Home'
-    ],
-    [
-        'href' => '/about',
-        'name' => 'Nosotros'
-    ],
-    [
-        'href' => '/services',
-        'name' => 'Servicios'
-    ]
-];
+require __DIR__.'/../vendor/autoload.php';
+
+use Paw\App\Controllers\PageController;
+use Paw\App\Controllers\ErrorController;
+
+$whoops = new \Whoops\Run;
+
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+
+$whoops->register();
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+$controller = new PageController();
+
 if ($path === '/') {
-
-    $titulo = htmlspecialchars($_GET['nombre'] ?? "PAW") ;
-    require __DIR__ . '/../src/index.view.php';
-    
-    
+    $controller->index();
 } elseif ($path == '/about') {
-    
-    $titulo = 'Nosotros';
-    $main = 'Pagina sobre Nosotros';
-    require __DIR__ . '/../src/about.view.php';
-    
+    $controller->about();    
+} elseif ($path == '/contact') {
+    $controller->contact();
 } elseif ($path == '/services') {
-    
-    $titulo = 'Servicios';
-    $main = 'Pagina de Servicios';
-    require __DIR__ . '/../src/services.view.php';
-
+    $controller->services();    
 } else {
-
-    echo 'Page not found';
-
-
-
+    $controller = new ErrorController();
+    $controller->notFound();
 }
+    
 
 
