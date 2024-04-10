@@ -1,22 +1,9 @@
 <?php 
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../src/bootstrap.php';
 
 use Paw\App\Controllers\PageController;
 use Paw\App\Controllers\ErrorController;
-use Monolog\Logger;
-use Monolog\Level;
-use Monolog\Handler\StreamHandler;
-
-
-$whoops = new \Whoops\Run;
-
-$log = new Logger('mvc-app');
-$log->pushHandler(new StreamHandler(__DIR__.'/../logs/app.log', Level::Debug));
-
-$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-
-$whoops->register();
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
