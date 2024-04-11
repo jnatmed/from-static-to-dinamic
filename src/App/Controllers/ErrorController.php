@@ -36,4 +36,10 @@ class ErrorController {
         $main = 'Page Not Found';
         require $this->viewsDir. 'not-found.view.php';
     }
+    
+    public function internalError() {
+        http_response_code(500);
+        $main = 'Internal Server Error';
+        require $this->viewsDir. 'internal-error.view.php';
+    }
 }

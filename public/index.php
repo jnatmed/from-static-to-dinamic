@@ -2,9 +2,7 @@
 
 require __DIR__.'/../src/bootstrap.php';
 
-use Paw\App\Controllers\PageController;
-use Paw\App\Controllers\ErrorController;
-use Paw\Core\Router;
+use Paw\Core\Exceptions\RouteNotFoundException;
 
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -12,33 +10,15 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $log->info("Peticion a :{$path}");
 
 
-$router = new Router;
-
-$router->loadRoutes('/', 'PageController@index');
-$router->loadRoutes('/about', 'PageController@about');
-$router->loadRoutes('/services', 'PageController@services');
-$router->loadRoutes('/contact', 'PageController@contact');
-
-$router->direct($path);
-
-$controller = new PageController();
-
-if ($path === '/') {
-    $controller->index();
-    $log->info("Respuesta Exitosa: 200");
-} elseif ($path == '/about') {
-    $controller->about();    
-    $log->info("Respuesta Exitosa: 200");
-} elseif ($path == '/contact') {
-    $controller->contact();
-    $log->info("Respuesta Exitosa: 200");
-} elseif ($path == '/services') {
-    $controller->services();    
-    $log->info("Respuesta Exitosa: 200");
-} else {
-    $controller = new ErrorController();
-    $controller->notFound();
-    $log->info("Path Not Found: 404");
+try {
+    $router->direct($path);
+    $log->info("Estatus Code: 200 - {$path}");
+} catch (RouteNotFoundException) {
+    $router->direct('not-found');
+    $log->info("Path not Found: 404", ['Error' => $path]);
+} catch (\Exception $e) {
+    $router->direct('internal_error');
+    $log->error("Status Code: 500 - nternal Server Error", ['Error' => $e]);
 }
 
 

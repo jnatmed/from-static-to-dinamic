@@ -51,10 +51,5 @@ class PageController {
         $main = 'Pagina de Servicios';            
         require $this->viewsDir. 'services.view.php';            
     }
-    public function notFound() {
-        http_response_code(404);
-        $main = 'Page Not Found';
-        require $this->viewsDir. 'not-found.view.php';
-    }
 
 }
