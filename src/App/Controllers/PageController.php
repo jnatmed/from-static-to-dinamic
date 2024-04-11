@@ -8,7 +8,7 @@ class PageController {
     public array $menu;
 
     public function __construct(){
-        $this->viewsDir = __DIR__ . '/../../views/';
+        $this->viewsDir = __DIR__ . '/../views/';
 
         $this->menu = [
             [
