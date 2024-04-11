@@ -7,12 +7,13 @@
 </head>
 <body>
     
-    <header>        
+    <header>
+        
+         <?php require __DIR__ .'/parts/nav.view.php'; ?>
+
         <h1>Error Interno del Servidor<h1>
-    
-        <?php require __DIR__ .'/parts/nav.view.php'; ?>
+
     </header>
-    
     
 </body>
 </html>

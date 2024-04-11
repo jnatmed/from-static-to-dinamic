@@ -7,9 +7,13 @@
 </head>
 <body>
     
-    <h1>Page Not Found<h1>
+    <header>
 
-    <?php require __DIR__ .'/parts/nav.view.php'; ?>
+        <h1>Page Not Found<h1>
+    
+        <?php require __DIR__ .'/parts/nav.view.php'; ?>
+
+    </header>
     
     <main>
         <h1><?= $main ?><h1>
