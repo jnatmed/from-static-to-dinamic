@@ -5,7 +5,6 @@
 
     <?php require __DIR__.'/parts/head.view.php' ?>
 
-    <title><?= $titulo ?></title>
 </head>
 
 <body class="home">
