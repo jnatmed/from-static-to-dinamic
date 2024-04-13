@@ -2,6 +2,8 @@
 
 namespace Paw\Core;
 
+use Exception;
+use Paw\Core\Request;
 use Paw\Core\Exceptions\RouteNotFoundException;
 
 Class Router {
@@ -10,6 +12,15 @@ Class Router {
         "GET" => [],
         "POST" => []
     ];
+
+    public string $notFound = 'not_found';
+    public string $internalError = 'internal_error';
+
+    public function __construct(){
+        $this->get($this->notFound, 'ErrorController@notFound');
+        $this->get($this->internalError, 'ErrorController@internalError');
+    }
+
 
     public function loadRoutes($path, $action, $method = "GET") 
     {
@@ -28,19 +39,35 @@ Class Router {
         return array_key_exists($path, $this->routes[$method]);
     }
 
-    public function getController($path, $http_method){
+    public function getController($path, $http_method)
+    {
+            
+        if(!$this->exists($path, $http_method)){
+            throw new RouteNotFoundException("No existe ruta para este Path");
+    }
+
         return explode('@', $this->routes[$http_method][$path]);
     }
 
-    public function direct($path, $http_method = "GET")
-    {
-        if(!$this->exists($path, $http_method)){
-            throw new RouteNotFoundException("No existe ruta para este Path");
-        }
-
-        list($controller, $method) = $this->getController($path, $http_method);
+    public function call($controller, $method){
         $controller = "Paw\\App\\Controllers\\{$controller}";
         $objController =  new $controller;
         $objController->$method();
+
+    }
+
+    public function direct(Request $request)
+    {
+        try {
+            list($path, $http_method) = $request->route();
+            list($controller, $method) = $this->getController($path, $http_method);
+            $this->call($controller, $method);
+        } catch (RouteNotFoundException $e) {
+            list($controller, $method) = $this->getController($this->notFound, "GET");
+            $this->call($controller, $method);
+        } catch (Exception $e) {
+            list($controller, $method) = $this->getController($this->internalError, "GET");
+            $this->call($controller, $method);
+        } 
     }
 }
