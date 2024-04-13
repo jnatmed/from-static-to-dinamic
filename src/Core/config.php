@@ -9,9 +9,8 @@ class Config
     public function __construct() 
     {
         $this->configs['LOG_LEVEL'] = getenv(("LOG_LEVEL"), "INFO");
-        $path = getenv("LOG_PATH", "/logs/app.log");
+        $path = getenv("LOG_PATH", '/logs/app.log');
         $this->configs['LOG_PATH'] = $this->joinPaths('..', $path);
-
     }
 
     public function joinPaths()
@@ -23,8 +22,8 @@ class Config
             }
         }
 
-        return preg_replace("#" . preg_quote(DIRECTORY_SEPARATOR, "#") . "+#", DIRECTORY_SEPARATOR, join(DIRECTORY_SEPARATOR, $paths));
-
+        $result = preg_replace("#/+#", "/", join("/", $paths));
+        return $result;
     }
 
     public function get($name)

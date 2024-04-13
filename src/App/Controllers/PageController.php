@@ -33,8 +33,7 @@ class PageController {
 
     public function index() 
     {
-        $titulo = htmlspecialchars($_GET['nombre'] ?? "PAW") ;
-        $main = 'Pagina Principal';
+        $titulo = "PAW POWER | HOME" ;
         require $this->viewsDir. 'index.view.php';
     }
     public function about() 
