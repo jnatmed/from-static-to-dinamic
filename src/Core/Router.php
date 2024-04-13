@@ -5,8 +5,11 @@ namespace Paw\Core;
 use Exception;
 use Paw\Core\Request;
 use Paw\Core\Exceptions\RouteNotFoundException;
+use Paw\Core\Traits\Loggable;
 
-Class Router {
+Class Router 
+{
+    use Loggable;
 
     public array $routes= [
         "GET" => [],
@@ -20,7 +23,6 @@ Class Router {
         $this->get($this->notFound, 'ErrorController@notFound');
         $this->get($this->internalError, 'ErrorController@internalError');
     }
-
 
     public function loadRoutes($path, $action, $method = "GET") 
     {
@@ -53,7 +55,6 @@ Class Router {
         $controller = "Paw\\App\\Controllers\\{$controller}";
         $objController =  new $controller;
         $objController->$method();
-
     }
 
     public function direct(Request $request)
@@ -61,13 +62,35 @@ Class Router {
         try {
             list($path, $http_method) = $request->route();
             list($controller, $method) = $this->getController($path, $http_method);
-            $this->call($controller, $method);
-        } catch (RouteNotFoundException $e) {
-            list($controller, $method) = $this->getController($this->notFound, "GET");
-            $this->call($controller, $method);
-        } catch (Exception $e) {
-            list($controller, $method) = $this->getController($this->internalError, "GET");
-            $this->call($controller, $method);
-        } 
+            $this->logger
+                ->info(
+                    "Status Code: 200",
+                    [
+                        "Path" => $path,
+                        "Method" => $method
+                    ]
+                );
+                
+            } catch (RouteNotFoundException $e) {
+                list($controller, $method) = $this->getController($this->notFound, "GET");
+                $this->logger
+                    ->debug(
+                        "Status Code: 404 - Route Not Found",
+                        [
+                            "ERROR" => $e
+                        ]
+                    );
+                } catch (Exception $e) {
+                    list($controller, $method) = $this->getController($this->internalError, "GET");
+                    $this->logger
+                    ->error(
+                        "Status Code: 500 - Internal Server Error",
+                        [
+                            "ERROR" => $e
+                            ]
+                        );
+                } finally {                    
+                        $this->call($controller, $method);
+                } 
     }
 }

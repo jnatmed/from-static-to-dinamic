@@ -35,6 +35,7 @@ $whoops->register();
 $request = new Request;
 
 $router = new Router;
+$router->setLogger($log);
 
 $router->get('/', 'PageController@index');
 $router->get('/about', 'PageController@about');

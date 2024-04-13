@@ -23,7 +23,8 @@ class Config
             }
         }
 
-        return preg_replace("#/+", "/", join("/", $paths));
+        return preg_replace("#" . preg_quote(DIRECTORY_SEPARATOR, "#") . "+#", DIRECTORY_SEPARATOR, join(DIRECTORY_SEPARATOR, $paths));
+
     }
 
     public function get($name)
