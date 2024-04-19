@@ -15,8 +15,13 @@ class Autor extends Model
 
     public $fields = [
         'nombre' => null,
-        'email' => null
+        'email' => null,
+        'id' => null
     ];
+
+    public function setId($id){
+        $this->fields['id'] = $id;
+    }
 
     public function setNombre(string $nombre)
     {
@@ -50,4 +55,12 @@ class Autor extends Model
             $this->$method($values[$field]);
         }
     }
+
+    public function load($id)
+    {
+        $params = [ "id" => $id];
+        $record = current($this->queryBuilder->select($this->table, $params));
+        $this->set($record);
+    }
+
 }

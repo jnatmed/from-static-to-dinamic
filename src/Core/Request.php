@@ -14,6 +14,11 @@ class Request
         return $_SERVER['REQUEST_METHOD'];
     }
 
+    public function get($key)
+    {
+        return $_POST[$key] ?? $_GET[$key] ?? null;
+    }
+
     public function route()
     {
         return [

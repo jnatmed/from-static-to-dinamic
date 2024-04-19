@@ -31,7 +31,7 @@ $log->pushHandler($handler);
 
 $connectionBuilder = new ConnectionBuilder;
 $connectionBuilder->setLogger($log);
-$connectionBuilder->make($config);
+$connection = $connectionBuilder->make($config);
 
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 
@@ -47,7 +47,7 @@ $router->get('/about', 'PageController@about');
 $router->get('/services', 'PageController@services');
 $router->get('/contact', 'PageController@contact');
 $router->post('/contact', 'PageController@contactProccess');
-$router->get('/authors', 'AutorController@index');
-$router->get('/author', 'AutorController@get');
-$router->get('/author/edit', 'AutorController@edit');
-$router->post('/author/edit', 'AutorController@set');
+$router->get('/authors', 'AuthorController@index');
+$router->get('/author', 'AuthorController@get');
+$router->get('/author/edit', 'AuthorController@edit');
+$router->post('/author/edit', 'AuthorController@set');
