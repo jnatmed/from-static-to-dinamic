@@ -12,6 +12,9 @@ class Controller
     public ?string $modelName = null;   
 
     public function __construct(){
+
+        global $connection, $log;
+
         $this->viewsDir = __DIR__ . '/../views/';
 
         $this->menu = [
@@ -33,7 +36,10 @@ class Controller
             ]
         ];
         if(!is_null($this->modelName)){
-            $this->setModel(new $this->modelName);
+            $qb = new QueryBuilder($connection, $log);
+            $model = new $this->modelName;
+            $model->setQueryBuilder($qb);
+            $this->setModel($model);
         }
     }
 
