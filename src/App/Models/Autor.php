@@ -27,7 +27,7 @@ class Autor extends Model
     {
         if (strlen($nombre) > 60)
         {
-            throw new Exception("El nombre del autor no debe ser mayor a 60");
+            throw new InvalidValueFormatException("El nombre del autor no debe ser mayor a 60");
         }
 
         $this->fields['nombre'] = $nombre;

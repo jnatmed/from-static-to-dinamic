@@ -11,7 +11,7 @@ class Controller
     public string $viewsDir;
     public array $menu;
     public ?string $modelName = null;   
-    public $log_local;
+    // public $log_local;
 
     public function __construct(){
 
@@ -48,7 +48,6 @@ class Controller
             $qb = new QueryBuilder($connection, $log);
             $model = new $this->modelName;
             $model->setQueryBuilder($qb);
-            $log->info("__construct", [$model]);
             $this->setModel($model);
         }
     }
@@ -56,6 +55,6 @@ class Controller
     public function setModel(Model $model)
     {
         // $this->log_local->info("setModel: ", [$model]);
-        $this->modelName = $model;
+        $this->model = $model;
     }
 }
