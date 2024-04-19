@@ -47,3 +47,7 @@ $router->get('/about', 'PageController@about');
 $router->get('/services', 'PageController@services');
 $router->get('/contact', 'PageController@contact');
 $router->post('/contact', 'PageController@contactProccess');
+$router->get('/authors', 'AutorController@index');
+$router->get('/author', 'AutorController@get');
+$router->get('/author/edit', 'AutorController@edit');
+$router->post('/author/edit', 'AutorController@set');

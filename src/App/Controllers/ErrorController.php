@@ -2,35 +2,10 @@
 
 namespace Paw\App\Controllers;
 
-class ErrorController {
+use Paw\Core\Controller;
 
-    public string $viewsDir;
-    public array $menu;
-
-    public function __construct(){
-        $this->viewsDir = __DIR__ . '/../views/';
-
-        $this->menu = [
-            [
-                'href' => '/',
-                'name' => 'Home'
-            ],
-            [
-                'href' => '/about',
-                'name' => 'Quienes Somos'
-            ],
-            [
-                'href' => '/services',
-                'name' => 'Servicios'
-            ],
-            [
-                'href' => '/contact',
-                'name' => 'Contactos'
-            ]
-        ];
-        
-    }
-    
+class ErrorController extends Controller{
+   
     public function notFound() {
         http_response_code(404);
         $titulo = 'Page Not Found';
