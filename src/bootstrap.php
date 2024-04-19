@@ -10,6 +10,7 @@ use Dotenv\Dotenv;
 use Paw\Core\Router;
 use Paw\Core\Config;
 use Paw\Core\Request;
+use Paw\Core\Database\ConnectionBuilder;
 
 $dotenv = Dotenv::createUnsafeImmutable(__DIR__.'/../');
 
@@ -27,6 +28,10 @@ $handler->setLevel($config->get("LOG_LEVEL"));
 $handler->setLevel(Level::Debug);
 
 $log->pushHandler($handler);
+
+$connectionBuilder = new ConnectionBuilder;
+$connectionBuilder->setLogger($log);
+$connectionBuilder->make($config);
 
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 
