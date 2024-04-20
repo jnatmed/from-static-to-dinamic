@@ -4,7 +4,6 @@ namespace Paw\Core;
 
 use Paw\Core\Model; 
 use Paw\Core\Database\QueryBuilder;
-use Paw\App\Models\AutoresCollection;
 
 class Controller 
 {
@@ -16,8 +15,6 @@ class Controller
     public function __construct(){
 
         global $connection, $log;        
-
-        // $this->log_local = $log;
 
         $this->viewsDir = __DIR__ . '/../App/views/';
 

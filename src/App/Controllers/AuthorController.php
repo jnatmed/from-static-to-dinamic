@@ -5,7 +5,6 @@ namespace Paw\App\Controllers;
 use Paw\Core\Controller;
 
 use Paw\App\Models\AutoresCollection;
-// use Paw\App\Models\Autor;
 
 
 class AuthorController extends Controller
@@ -14,7 +13,6 @@ class AuthorController extends Controller
 
     public function index()
     {
-
         $titulo = "Autores";
         $authors = $this->model->getAll();
         require $this->viewsDir . 'authors.index.view.php';
