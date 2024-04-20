@@ -17,7 +17,6 @@ class AuthorController extends Controller
 
         $titulo = "Autores";
         $authors = $this->model->getAll();
-        // var_dump($authors);
         require $this->viewsDir . 'authors.index.view.php';
     }
 

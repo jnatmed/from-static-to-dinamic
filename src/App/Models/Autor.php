@@ -34,6 +34,11 @@ class Autor extends Model
 
     }
 
+    public function setEmail(string $email) 
+    {
+        $this->fields['email'] = $email;
+    }
+
     public function getEmail(string $email)
     {   
         if(!filter_var($email, FILTER_VALIDATE_EMAIL))
@@ -43,17 +48,18 @@ class Autor extends Model
         $this->fields['email'] = $email;
     }
 
-    public function set(array $val)
+    public function set(array $values)
     {
-        foreach(array_keys($this->fields) as $field)
+        foreach($values as $field => $value)
         {
             if(!isset($values[$field]))
             {
                 continue;
             }
             $method = 'set'.ucfirst($field);
-            $this->$method($values[$field]);
+            $this->$method($value);
         }
+        
     }
 
     public function load($id)

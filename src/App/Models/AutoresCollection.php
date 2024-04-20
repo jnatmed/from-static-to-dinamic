@@ -14,13 +14,12 @@ class AutoresCollection extends Model
     {
         // crear tantos autor como filas de la tabla autores
         $authors = $this->queryBuilder->select($this->table);
-        
+
         $authorsCollection = [];
         foreach ($authors as $author)
         {
             $newAutor = new Autor;
             $newAutor->set($author);
-            var_dump($newAutor);
             $authorsCollection[] = $newAutor;
         }
 
