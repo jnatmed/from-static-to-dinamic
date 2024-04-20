@@ -11,7 +11,7 @@ class Controller
     public string $viewsDir;
     public array $menu;
     public ?string $modelName = null;   
-    // public $log_local;
+    protected $model;
 
     public function __construct(){
 
@@ -54,7 +54,6 @@ class Controller
 
     public function setModel(Model $model)
     {
-        // $this->log_local->info("setModel: ", [$model]);
         $this->model = $model;
     }
 }
